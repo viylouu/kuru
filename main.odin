@@ -4,20 +4,21 @@ import "core:fmt"
 
 import "kuru"
 import d "kuru/drawing"
+import inp "kuru/input"
 
 import sdl "vendor:sdl2"
 
-WIDTH :: 1280
-HEIGHT :: 720
+WIDTH :: 256*4
+HEIGHT :: 256*4
 
 world: [256][256]bool
 
 main :: proc() {
-    kuru.master("tut", 1280,720, init,tick,draw,quit)
+    kuru.master("tut", WIDTH,HEIGHT, init,tick,draw,quit)
 }
 
 init :: proc() {
-
+    sdl.RenderSetScale(d.rend,4,4)
 }
 
 tick :: proc() {
@@ -34,6 +35,10 @@ draw :: proc() {
                 d.point(x,y)
             }
         }
+    }
+
+    if inp.is_mouse_down(sdl.BUTTON_LEFT) {
+        world[inp.mouse_y/4][inp.mouse_x/4] = true
     }
 }
 
