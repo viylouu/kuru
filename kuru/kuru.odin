@@ -4,6 +4,7 @@ import "core:fmt"
 
 import d "drawing"
 import w "windowing"
+import inp "input"
 
 import sdl "vendor:sdl2"
 
@@ -17,7 +18,10 @@ master :: proc(title:cstring, width,height:i32, start,update,render,close: proc(
         for sdl.PollEvent(&e) {
             if e.type == sdl.EventType.QUIT {
                 running = false
+                continue
             }
+
+            inp.poll_event(e)
         }
 
         update()
