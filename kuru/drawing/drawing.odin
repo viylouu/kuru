@@ -2,8 +2,9 @@ package drawing
 
 import sdl "vendor:sdl2"
 
-surf: ^sdl.Surface
+rend: ^sdl.Renderer
 
 clear :: proc(r,g,b: u8) {
-    sdl.FillRect(surf, nil, sdl.MapRGB(surf.format, r,g,b))
+    sdl.SetRenderDrawColor(rend,r,g,b,255)
+    sdl.RenderClear(rend)
 }

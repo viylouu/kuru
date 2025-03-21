@@ -11,7 +11,7 @@ WIDTH :: 1280
 HEIGHT :: 720
 
 main :: proc() {
-    kuru.master(init,tick,draw,quit)
+    kuru.master("tut", 1280,720, init,tick,draw,quit)
 }
 
 init :: proc() {

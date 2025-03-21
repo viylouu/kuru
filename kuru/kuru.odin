@@ -7,8 +7,8 @@ import w "windowing"
 
 import sdl "vendor:sdl2"
 
-master :: proc(start,update,render,close: proc()) {
-    init()
+master :: proc(title:cstring, width,height:i32, start,update,render,close: proc()) {
+    init(title,width,height)
     start()
 
     running := true
@@ -17,35 +17,32 @@ master :: proc(start,update,render,close: proc()) {
         for sdl.PollEvent(&e) {
             if e.type == sdl.EventType.QUIT {
                 running = false
-                break
             }
-
-            update()
-            render()
-
-            sdl.UpdateWindowSurface(w.window)
         }
+
+        update()
+        render()
+
+        sdl.RenderPresent(d.rend)
     }
 
     close()
     end()
 }
 
-init :: proc() {
+init :: proc(name:cstring,width,height:i32) {
     if sdl.Init(sdl.INIT_VIDEO) < 0 {
         fmt.eprintln("COULD NOT INITIALIZE SDL2! err: %s", sdl.GetError())
         return
     }
 
-    if !w.create_window("tut",1280,720) {
+    if !w.create_window(name,width,height) {
         fmt.eprintln("COULD NOT CREATE WINDOW! err: %s", sdl.GetError())
         return
     }
 }
 
 end :: proc() {
-    sdl.FreeSurface(d.surf)
-
     w.destroy_window()
     sdl.Quit()
 }
