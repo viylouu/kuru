@@ -15,7 +15,7 @@ HEIGHT :: 256*4
 world: [256][256]bool
 
 main :: proc() {
-    kuru.master("tut", WIDTH,HEIGHT, init,tick,draw,quit)
+    kuru.master("sand", WIDTH,HEIGHT, init,tick,draw,quit)
 }
 
 init :: proc() {
@@ -74,7 +74,7 @@ draw :: proc() {
         }
     }
 
-    if inp.is_mouse_down(sdl.BUTTON_LEFT) {
+    if inp.is_mouse_down(sdl.BUTTON_LEFT) && inp.mouse_x >= 0 && inp.mouse_y >= 0 && inp.mouse_x <= WIDTH-4 && inp.mouse_y <= HEIGHT-4 {
         world[inp.mouse_y/4][inp.mouse_x/4] = true
     }
 }
