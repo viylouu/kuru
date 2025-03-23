@@ -15,7 +15,7 @@ HEIGHT :: 256*4
 world: [256][256]bool
 
 main :: proc() {
-    kuru.master("sand", WIDTH,HEIGHT, init,tick,draw,quit)
+    kuru.master("sand", WIDTH,HEIGHT, 1, init,tick,draw,quit)
 }
 
 init :: proc() {
