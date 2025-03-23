@@ -9,18 +9,22 @@ import "../" // kuru
 import d "../drawing"
 
 
+// this loads a surface using the sdl LoadBMP function and converts it to a texture for you to use
 load_bmp :: proc(path: cstring) -> ^sdl.Texture {
     surf := sdl.LoadBMP("assets/backgrounds.bmp")
     return surf_to_tex_with_free(surf)
 }
 
-// load tends to be slower than using just bmp apparently, but bmp is a lot larger, so pick your poisson (🐟)
+// this loads a surface using the sdl_image Load function and converts it to a texture for you to use
+//
+// load tends to be slower than using just bmp apparently, but bmp is a lot larger (bmp also doesent support transparency), so pick your poisson (🐟)
 load :: proc(path: cstring) -> ^sdl.Texture {
     surf := sdli.Load(path)
     return surf_to_tex_with_free(surf)
 }
 
 
+// this converts a surface to a texture
 surf_to_tex :: proc(surf: ^sdl.Surface) -> ^sdl.Texture {
     if surf == nil {
         fmt.eprintln("failed to load image \"bgtex\"! err: ", sdl.GetError())
@@ -39,6 +43,7 @@ surf_to_tex :: proc(surf: ^sdl.Surface) -> ^sdl.Texture {
 
     return tex
 }
+// this converts a surface to a texture and frees the surface
 surf_to_tex_with_free :: proc(surf: ^sdl.Surface) -> ^sdl.Texture {
     tex := surf_to_tex(surf)
     sdl.FreeSurface(surf)

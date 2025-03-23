@@ -29,23 +29,29 @@ poll_event :: proc(e: sdl.Event) {
     }
 }
 
+// checks if key "x" is currently being pressed
 is_key_down :: proc(scancode: sdl.Scancode) -> bool {
     return key_states[scancode]
 }
+// checks if key "x" is currently not being pressed
 is_key_up :: proc(scancode: sdl.Scancode) -> bool {
     return !key_states[scancode]
 }
 
+// checks if mouse button "x" is currently being pressed
 is_mouse_down :: proc(button: int) -> bool {
     return mouse_states[button]
 }
+// checks if mouse button "x" is currently not being pressed
 is_mouse_up :: proc(button: int) -> bool {
     return !mouse_states[button]
 }
 
+// checks if the user is scrolling the mouse wheel horizontally
 is_mouse_scroll_x :: proc() -> bool {
     return mouse_scroll_delta_x != 0
 }
+// checks if the user is scrolling the mouse wheel vertically (normal)
 is_mouse_scroll_y :: proc() -> bool {
     return mouse_scroll_delta_y != 0
 }
