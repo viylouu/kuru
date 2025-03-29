@@ -7,24 +7,20 @@ import d "drawing"
 import w "windowing"
 import inp "input"
 
-import sdl "vendor:sdl2"
+import rl "vendor:raylib"
 
 running: bool
 
 // basic setup for everything
-master :: proc(title:cstring, width,height:i32, scale:f32 = 1, start,update,render,close: proc()) {
-    init(title,i32(f32(width)*scale),i32(f32(height)*scale))
-
-    misc.scale = scale
-
-    sdl.RenderSetScale(d.rend,scale,scale)
+master :: proc(title:cstring, width,height:i32, start,update,render,close: proc()) {
+    init(title,width,height)
 
     start()
 
-    running = true
-    e: sdl.Event
-    for running {
-        inp.mouse_scroll_delta_x = 0
+    //running = true
+    //e: sdl.Event
+    for !rl.WindowShouldClose() {
+        /*inp.mouse_scroll_delta_x = 0
         inp.mouse_scroll_delta_y = 0
 
         for sdl.PollEvent(&e) {
@@ -34,12 +30,16 @@ master :: proc(title:cstring, width,height:i32, scale:f32 = 1, start,update,rend
             }
 
             inp.poll_event(e)
-        }
+        }*/
+
+        inp.poll_event()
 
         update()
+        rl.BeginDrawing()
         render()
+        rl.EndDrawing()
 
-        sdl.RenderPresent(d.rend)
+        //sdl.RenderPresent(d.rend)
     }
 
     close()
@@ -48,7 +48,7 @@ master :: proc(title:cstring, width,height:i32, scale:f32 = 1, start,update,rend
 
 // initializes the sdl context with the window setup
 init :: proc(name:cstring,width,height:i32) {
-    if sdl.Init(sdl.INIT_VIDEO) < 0 {
+    /*if sdl.Init(sdl.INIT_VIDEO) < 0 {
         fmt.eprintln("failed to init sdl2! err: %s", sdl.GetError())
         stop()
         return
@@ -58,7 +58,8 @@ init :: proc(name:cstring,width,height:i32) {
         fmt.eprintln("failed to create window! err: %s", sdl.GetError())
         stop()
         return
-    }
+    }*/
+    w.create_window(name,width,height)
 }
 
 // stops the current game loop (does not quit prematurely)
@@ -69,5 +70,5 @@ stop :: proc() {
 // this is NOT used to close the program, this is called at the end of the "master" function
 cleanup :: proc() {
     w.destroy_window()
-    sdl.Quit()
+    //sdl.Quit()
 }

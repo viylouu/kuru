@@ -1,32 +1,39 @@
 package drawing
 
+import rl "vendor:raylib"
 import sdl "vendor:sdl2"
 
 rend: ^sdl.Renderer
 
+cur_col: rl.Color
+
 // clears the screen with the specified colors
 clear :: proc(r,g,b: u8) {
-    sdl.SetRenderDrawColor(rend,r,g,b,255)
-    sdl.RenderClear(rend)
+    /*sdl.SetRenderDrawColor(rend,r,g,b,255)
+    sdl.RenderClear(rend)*/
+    rl.ClearBackground(rl.Color{r,g,b,1})
 }
 
 // sets the current color you are using to draw with to this
 fill :: proc(r,g,b: u8, a: u8 = 255) {
-    sdl.SetRenderDrawColor(rend,r,g,b,a)
+    //sdl.SetRenderDrawColor(rend,r,g,b,a)
+    cur_col = rl.Color{r,g,b,a}
 }
 
 // draws a pixel at a point
 point :: proc(x,y: i32) {
-    sdl.RenderDrawPoint(rend,x,y)
+    //sdl.RenderDrawPoint(rend,x,y)
+    rl.DrawPixel(x,y,cur_col)
 }
 // draws a pixel at a point
 fpoint :: proc(x,y: f32) {
-    sdl.RenderDrawPointF(rend, x,y)
+    //sdl.RenderDrawPointF(rend, x,y)
+    rl.DrawPixel(i32(x),i32(y),cur_col)
 }
 
 // draws a rectangle
 rect :: proc(x,y,w,h: i32) {
-    sdl.RenderDrawRect(
+    /*sdl.RenderDrawRect(
         rend,
         &sdl.Rect {
             x=x,
@@ -34,11 +41,12 @@ rect :: proc(x,y,w,h: i32) {
             w=w,
             h=h,
         }
-    )
+    )*/
+    rl.DrawRectangle(x,y,w,h,cur_col)
 }
 // draws a rectangle
 frect :: proc(x,y,w,h: f32) {
-    sdl.RenderDrawRectF(
+    /*sdl.RenderDrawRectF(
         rend,
         &sdl.FRect {
             x=x,
@@ -46,9 +54,11 @@ frect :: proc(x,y,w,h: f32) {
             w=w,
             h=h,
         }
-    )
+    )*/
+    rl.DrawRectangle(i32(x),i32(y),i32(w),i32(h),cur_col)
 }
 
+/*
 // draws an image
 image :: proc(tex: ^sdl.Texture, x,y,w,h: i32) {
     dest: sdl.Rect = { x,y,w,h }
@@ -72,3 +82,4 @@ fimage_sd :: proc(tex: ^sdl.Texture, sx,sy,sw,sh, dx,dy,dw,dh: f32) {
     dest: sdl.Rect = { i32(dx),i32(dy),i32(dw),i32(dh) }
     sdl.RenderCopy(rend, tex, &src, &dest)
 }
+*/

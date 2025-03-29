@@ -7,19 +7,20 @@ import "kuru"
 import d "kuru/drawing"
 import inp "kuru/input"
 
-import sdl "vendor:sdl2"
+import rl "vendor:raylib"
+//import sdl "vendor:sdl2"
 
-WIDTH :: 256*4
-HEIGHT :: 256*4
+WIDTH :: 256
+HEIGHT :: 256
 
 world: [256][256]bool
 
 main :: proc() {
-    kuru.master("sand", WIDTH,HEIGHT, 1, init,tick,draw,quit)
+    kuru.master("sand", WIDTH,HEIGHT, init,tick,draw,quit)
 }
 
 init :: proc() {
-    sdl.RenderSetScale(d.rend,4,4)
+    //sdl.RenderSetScale(d.rend,4,4)
 }
 
 tick :: proc() {
@@ -74,8 +75,8 @@ draw :: proc() {
         }
     }
 
-    if inp.is_mouse_down(sdl.BUTTON_LEFT) && inp.mouse_x >= 0 && inp.mouse_y >= 0 && inp.mouse_x <= WIDTH-4 && inp.mouse_y <= HEIGHT-4 {
-        world[inp.mouse_y/4][inp.mouse_x/4] = true
+    if inp.is_mouse_down(rl.MouseButton.LEFT) && inp.mouse_x >= 0 && inp.mouse_y >= 0 && inp.mouse_x <= WIDTH-4 && inp.mouse_y <= HEIGHT-4 {
+        world[i32(inp.mouse_y)/4][i32(inp.mouse_x)/4] = true
     }
 }
 
