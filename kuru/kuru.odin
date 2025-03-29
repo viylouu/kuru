@@ -15,6 +15,8 @@ running: bool
 master :: proc(title:cstring, width,height:i32, start,update,render,close: proc()) {
     init(title,width,height)
 
+    rl.SetExitKey(rl.KeyboardKey.KEY_NULL)
+
     start()
 
     //running = true
