@@ -76,7 +76,7 @@ draw :: proc() {
     }
 
     if inp.is_mouse_down(rl.MouseButton.LEFT) && inp.mouse_x >= 0 && inp.mouse_y >= 0 && inp.mouse_x <= WIDTH-4 && inp.mouse_y <= HEIGHT-4 {
-        world[i32(inp.mouse_y)/4][i32(inp.mouse_x)/4] = true
+        world[i32(inp.mouse_y)][i32(inp.mouse_x)] = true
     }
 }
 
